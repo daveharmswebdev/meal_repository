@@ -48,7 +48,14 @@ var getCheck = diners.forEach(function(diner) {
 });
 
 var printCheck = diners.forEach(function(diner) {
-  console.log(diner.name);
+  console.log(diner.name + ' order:');
+  diner.orders.forEach(function(order) {
+    console.log(' **** ' + order.item + ' -- ' + order.price);
+  })
+  console.log(' **** Subtotal: ' + diner.subtotal);
+  console.log(' **** Tax: ' + diner.tax.toFixed(2));
+  console.log(' **** Tip: ' + diner.tip.toFixed(2));
+  console.log(' **** Total: ' + diner.total.toFixed(2));
 })
 
 // console.log(diners);
