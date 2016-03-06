@@ -41,9 +41,9 @@ var getCheck = diners.forEach(function(diner) {
   }, 0);
   diner.subtotal = dinerSubTotal;
   diner.tax = dinerSubTotal * 0.11;
-  // diner.tax = parseFloat(diner.tax.toFixed(2));
+  diner.tax = parseFloat(diner.tax.toFixed(2));
   diner.tip = dinerSubTotal * diner.tips;
-  // diner.tip = parseFloat(diner.tip.toFixed(2));
+  diner.tip = parseFloat(diner.tip.toFixed(2));
   diner.total = diner.subtotal + diner.tax + diner.tip;
 });
 
