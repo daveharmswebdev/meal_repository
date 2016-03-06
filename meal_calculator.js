@@ -7,8 +7,11 @@ function Diner(name, tips) {
   diner.tax = 0;
   diner.tip = 0;
   diner.total = 0;
+  diner.nameChange = function (param) { diner.name = param}
   return diner;
 }
+
+// Diner.prototype.nameChange = function (param) { this.name = param}
 
 var diners = [
   Diner('Larry', 0.2),
@@ -17,6 +20,9 @@ var diners = [
   Diner('Eddie', 0.17),
   Diner('Mr. Pink', 0)
 ];
+
+diners[0].nameChange('Mr. Orange');
+console.log(diners[0].name);
 
 diners[0].orders = [
   {item:'burger', price:5.99},
