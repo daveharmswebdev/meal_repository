@@ -14,6 +14,18 @@ function Restaurant(name) {
     restaurant.customers.forEach(function(customer) {
       customer.getCheck();
     })
+  }
+  restaurant.printCheck = function() {
+    restaurant.customers.forEach(function(customer) {
+      console.log(customer.name + ' order:');
+      customer.orders.forEach(function(order) {
+        console.log(' **** ' + order.item + ' -- ' + order.price);
+      })
+      console.log(' **** Subtotal: ' + customer.subtotal);
+      console.log(' **** Tax: ' + customer.tax.toFixed(2));
+      console.log(' **** Tip: ' + customer.tip.toFixed(2));
+      console.log(' **** Total: ' + customer.total.toFixed(2));      
+    })
   }  
   return restaurant;
 }
@@ -70,19 +82,6 @@ diners[2].addOrderItem('fries',2.19);
 diners[2].addOrderItem('jalapeno burger', 7.99);
 diners[2].addOrderItem('chocolate shake', 3.99);
 
-// var getCheck = diners.forEach(function(diner) {
-//   diner.getCheck();
-// });
 
 melrose.ringUpBill();
-
-// var printCheck = diners.forEach(function(diner) {
-//   console.log(diner.name + ' order:');
-//   diner.orders.forEach(function(order) {
-//     console.log(' **** ' + order.item + ' -- ' + order.price);
-//   })
-//   console.log(' **** Subtotal: ' + diner.subtotal);
-//   console.log(' **** Tax: ' + diner.tax.toFixed(2));
-//   console.log(' **** Tip: ' + diner.tip.toFixed(2));
-//   console.log(' **** Total: ' + diner.total.toFixed(2));
-// })
+melrose.printCheck();
