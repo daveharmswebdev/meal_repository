@@ -1,3 +1,23 @@
+function Restaurant(name) {
+  var restaurant = {};
+  restaurant.name = name || 'Hattie B\' Hot Chicken';
+  restaurant.customers = [];
+  restaurant.createCustomer = function(name,tips) {
+    restaurant.customers.push(Diner(name,tips));
+  }
+  restaurant.test = function() {
+    restaurant.customers.forEach(function(customer) {
+      console.log(customer);
+    })
+  }
+  restaurant.ringUpBill = function() {
+    restaurant.customers.forEach(function(customer) {
+      customer.getCheck();
+    })
+  }  
+  return restaurant;
+}
+
 function Diner(name, tips) {
   var diner = {};
   diner.name = name;
@@ -7,61 +27,62 @@ function Diner(name, tips) {
   diner.tax = 0;
   diner.tip = 0;
   diner.total = 0;
-  diner.nameChange = function (param) { diner.name = param}
+  diner.nameChange = function(newName) { 
+    diner.name = newName 
+  }
+  diner.addOrderItem = function(name,price) {
+    diner.orders.push({item:name,price:price})
+  }
+  diner.getCheck = function() {
+    diner.subtotal = diner.orders.reduce(function(sum, order) {
+      return sum + order.price;
+    }, 0)
+    diner.tax = diner.subtotal * 0.11;
+    diner.tax = parseFloat(diner.tax.toFixed(2));
+    diner.tip = diner.subtotal * diner.tips;
+    diner.tip = parseFloat(diner.tip.toFixed(2));
+    diner.total = diner.subtotal + diner.tax + diner.tip;
+  }
   return diner;
 }
 
-// Diner.prototype.nameChange = function (param) { this.name = param}
+var melrose = Restaurant('Melrose');
 
-var diners = [
-  Diner('Larry', 0.2),
-  Diner('Freddy', 0.15),
-  Diner('Vic', 0.2),
-  Diner('Eddie', 0.17),
-  Diner('Mr. Pink', 0)
-];
+melrose.createCustomer('Larry', 0.2);
+melrose.createCustomer('Freddy', 0.15);
+melrose.createCustomer('Vic', 0.2);
+melrose.createCustomer('Eddie', 0.17);
+melrose.createCustomer('Mr. Pink', 0);
+
+var diners = melrose.customers;
 
 diners[0].nameChange('Mr. Orange');
-console.log(diners[0].name);
 
-diners[0].orders = [
-  {item:'burger', price:5.99},
-  {item:'coke', price:1.99}
-];
-diners[1].orders = [
-  {item:'taco plate', price:6.99},
-  {item:'iced tea', price:0.99}
-];
-diners[3].orders = [
-  {item:'burger', price:5.99},
-  {item:'water', price:0.00}
-];
-diners[4].orders = [
-  {item:'steak', price:9.99},
-  {item:'coke', price:1.99}
-];
+diners[1].addOrderItem('taco plate',6.99);
+diners[1].addOrderItem('iced tea',0.99);
+diners[0].addOrderItem('burger',5.99);
+diners[0].addOrderItem('coke',1.99);
+diners[3].addOrderItem('burger',5.99);
+diners[3].addOrderItem('water',0.00);
+diners[4].addOrderItem('steak',9.99);
+diners[4].addOrderItem('coke',1.99);
+diners[2].addOrderItem('fries',2.19);
+diners[2].addOrderItem('jalapeno burger', 7.99);
+diners[2].addOrderItem('chocolate shake', 3.99);
 
-var getCheck = diners.forEach(function(diner) {
-  var dinerSubTotal = diner.orders.reduce(function(sum, order) {
-    return sum + order.price;
-  }, 0);
-  diner.subtotal = dinerSubTotal;
-  diner.tax = dinerSubTotal * 0.11;
-  diner.tax = parseFloat(diner.tax.toFixed(2));
-  diner.tip = dinerSubTotal * diner.tips;
-  diner.tip = parseFloat(diner.tip.toFixed(2));
-  diner.total = diner.subtotal + diner.tax + diner.tip;
-});
+// var getCheck = diners.forEach(function(diner) {
+//   diner.getCheck();
+// });
 
-var printCheck = diners.forEach(function(diner) {
-  console.log(diner.name + ' order:');
-  diner.orders.forEach(function(order) {
-    console.log(' **** ' + order.item + ' -- ' + order.price);
-  })
-  console.log(' **** Subtotal: ' + diner.subtotal);
-  console.log(' **** Tax: ' + diner.tax.toFixed(2));
-  console.log(' **** Tip: ' + diner.tip.toFixed(2));
-  console.log(' **** Total: ' + diner.total.toFixed(2));
-})
+melrose.ringUpBill();
 
-// console.log(diners);
+// var printCheck = diners.forEach(function(diner) {
+//   console.log(diner.name + ' order:');
+//   diner.orders.forEach(function(order) {
+//     console.log(' **** ' + order.item + ' -- ' + order.price);
+//   })
+//   console.log(' **** Subtotal: ' + diner.subtotal);
+//   console.log(' **** Tax: ' + diner.tax.toFixed(2));
+//   console.log(' **** Tip: ' + diner.tip.toFixed(2));
+//   console.log(' **** Total: ' + diner.total.toFixed(2));
+// })
